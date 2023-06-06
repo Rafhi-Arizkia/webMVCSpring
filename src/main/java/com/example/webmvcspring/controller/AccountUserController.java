@@ -26,14 +26,14 @@ public class AccountUserController {
     public String regis(Model model){
         RegisterDto registerDto = new RegisterDto();
         model.addAttribute("register",registerDto);
-        return "register";
+        return "from/register";
     }
     @PostMapping("/register/user")
     public String saveUser(@Valid @ModelAttribute("register")
                            RegisterDto registerDto, Model model, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             model.addAttribute("register",registerDto);
-            return "register";
+            return "from/register";
         }
         AccountEntity existingUser = service.findByEmail(registerDto.getEmail());
         if (existingUser != null){
