@@ -5,7 +5,7 @@ import com.example.webmvcspring.model.entity.AccountEntity;
 
 import java.util.List;
 
-public interface AccountService{
+public interface AccountUserService {
     AccountEntity save(RegisterDto registerDto);
 
     AccountEntity findByEmail(String email);
