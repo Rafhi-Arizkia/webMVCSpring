@@ -5,7 +5,7 @@ import com.example.webmvcspring.model.entity.AccountEntity;
 import com.example.webmvcspring.model.entity.Roles;
 import com.example.webmvcspring.model.repository.AccountRepo;
 import com.example.webmvcspring.model.repository.RolesRepo;
-import com.example.webmvcspring.service.AccountService;
+import com.example.webmvcspring.service.AccountUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @Service
 
-public class AccountUserServiceImpl implements AccountService, UserDetailsService {
+public class AccountUserServiceImpl implements AccountUserService, UserDetailsService {
     private final AccountRepo accountRepo;
     private final RolesRepo rolesRepo;
     private final PasswordEncoder passwordEncoder;
@@ -50,11 +50,12 @@ public class AccountUserServiceImpl implements AccountService, UserDetailsServic
         }
         return authorities;
     }
+
     @Override
     public AccountEntity save(RegisterDto registerDto) {
         Roles roles = rolesRepo.findByRolesName("ROLE_USER");
         if (roles == null){
-            checkRoleExist();
+            checkUserRoleExist();
         }
         var account = AccountEntity.builder()
                 .username(registerDto.getUsername())
@@ -65,7 +66,7 @@ public class AccountUserServiceImpl implements AccountService, UserDetailsServic
         return accountRepo.save(account);
     }
 
-    private void checkRoleExist(){
+    private void checkUserRoleExist(){
         Roles roles = new Roles();
         roles.setRolesName("ROLE_USER");
         rolesRepo.save(roles);
