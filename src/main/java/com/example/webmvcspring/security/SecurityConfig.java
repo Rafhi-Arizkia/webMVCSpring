@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 "/denied", "/video/*.mp4")
                         .permitAll()
                         .requestMatchers("/user/**").hasAuthority("ROLE_USER")
-                        .requestMatchers("/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((login) -> login
                         .loginPage("/login")
